@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Bahan</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+
+    <style>
+
+      /*
+        ROOT VARIABLES*/
+      :root{
+        --red-deep:#8B0000;
+        --red-core:#C0392B;
+        --red-vivid:#E74C3C;
+        --red-light:#FADBD8;
+        --red-xlight:#FEF5F4;
+
+        --gold:#D4A843;
+        --gold-light:#F9EFD7;
+
+        --cream:#FDF6EE;
+        --white:#FFFFFF;
+
+        --text-dark:#1A0A0A;
+        --text-mid:#4A2020;
+        --text-soft:#8B5E5E;
+
+        --border:#EDD8D4;
+
+        --shadow-sm:0 2px 8px rgba(139,0,0,.08);
+        --shadow-md:0 6px 24px rgba(139,0,0,.12);
+
+        --sidebar-w:240px;
+        --topbar-h:62px;
+
+        --radius:12px;
+        --radius-lg:18px;
+
+        --transition:all .25s ease;
+      }
+
+      /*
+        DARK MODE*/
+      [data-theme="dark"]{
+        --cream:#1C0D0D;
+        --white:#2A1111;
+
+        --text-dark:#F5E8E8;
+        --text-mid:#D4A4A4;
+        --text-soft:#A07070;
+
+        --border:#3D1A1A;
+
+        --red-xlight:#2A1010;
+        --gold-light:#2A1F0A;
+
+        --shadow-sm:0 2px 8px rgba(0,0,0,.3);
+        --shadow-md:0 6px 24px rgba(0,0,0,.4);
+      }
+
+      /*
+        BASE*/
+      *,
+      *::before,
+      *::after{
+        box-sizing:border-box;
+      }
+
+      body{
+        margin:0;
+        overflow-x:hidden;
+
+        font-family:'DM Sans',sans-serif;
+
+        background:var(--cream);
+        color:var(--text-dark);
+
+        transition:background .3s,color .3s;
+      }
+
+      h1,h2,h3,h4,h5,h6{
+        font-family:'Playfair Display',serif;
+      }
+
+      a{
+        text-decoration:none;
+      }
+
+      /*
+        SIDEBAR*/
+      #sidebar{
+        position:fixed;
+        top:0;
+        left:0;
+
+        width:var(--sidebar-w);
+        height:100vh;
+
+        background:linear-gradient(
+          175deg,
+          var(--red-deep) 0%,
+          #4A0A0A 100%
+        );
+
+        z-index:1000;
+
+        display:flex;
+        flex-direction:column;
+
+        overflow:hidden;
+
+        transition:transform .3s ease;
+      }
+
+      #sidebar::before{
+        content:'';
+
+        position:absolute;
+        inset:0;
+        pointer-events:none;
+      }
+
+      .sidebar-brand{
+        padding:22px 20px 16px;
+
+        border-bottom:1px solid rgba(255,255,255,.1);
+      }
+
+      .sidebar-brand .brand-icon{
+        width:38px;
+        height:38px;
+
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+
+        margin-bottom:8px;
+
+        border-radius:10px;
+
+        background:var(--gold);
+
+        font-size:18px;
+        color:var(--red-deep);
+      }
+
+      .sidebar-brand h6{
+        margin:0;
+
+        line-height:1.3;
+
+        font-size:13px;
+        font-weight:700;
+
+        color:#fff;
+      }
+
+      .sidebar-brand small{
+        color:rgba(255,255,255,.5);
+        font-size:10px;
+      }
+
+      .sidebar-nav{
+        flex:1;
+
+        padding:12px 0;
+
+        overflow-y:auto;
+      }
+
+      .sidebar-nav::-webkit-scrollbar{
+        width:3px;
+      }
+
+      .sidebar-nav::-webkit-scrollbar-thumb{
+        background:rgba(255,255,255,.2);
+        border-radius:2px;
+      }
+
+      .nav-item-custom{
+        padding:0 12px;
+        margin-bottom:2px;
+      }
+
+      .nav-link-custom{
+        width:100%;
+
+        display:flex;
+        align-items:center;
+        gap:10px;
+
+        padding:10px 14px;
+
+        border:none;
+        border-radius:10px;
+
+        background:none;
+
+        text-align:left;
+
+        cursor:pointer;
+
+        color:rgba(255,255,255,.65);
+
+        font-size:13.5px;
+        font-weight:500;
+
+        white-space:nowrap;
+
+        transition:var(--transition);
+      }
+
+      .nav-link-custom i{
+        width:20px;
+        flex-shrink:0;
+
+        font-size:16px;
+      }
+
+      .nav-link-custom:hover{
+        background:rgba(255,255,255,.08);
+        color:#fff;
+      }
+
+      .nav-link-custom.active{
+        background:linear-gradient(
+          135deg,
+          var(--red-vivid),
+          var(--gold)
+        );
+
+        color:#fff;
+
+        font-weight:600;
+
+        box-shadow:0 4px 14px rgba(231,76,60,.4);
+      }
+
+      .sidebar-footer{
+        padding:16px 12px;
+
+        border-top:1px solid rgba(255,255,255,.1);
+      }
+
+      .dark-toggle{
+        width:100%;
+
+        display:flex;
+        align-items:center;
+        gap:10px;
+
+        padding:10px 14px;
+
+        border:none;
+        border-radius:10px;
+
+        background:none;
+
+        cursor:pointer;
+
+        color:rgba(255,255,255,.65);
+
+        font-size:13.5px;
+        font-weight:500;
+
+        transition:var(--transition);
+      }
+
+      .dark-toggle:hover{
+        background:rgba(255,255,255,.08);
+        color:#fff;
+      }
+
+      .dark-toggle i{
+        width:20px;
+        font-size:16px;
+      }
+
+      /*TOPBAR*/
+      #topbar {
+      position: fixed; top: 0;
+      left: var(--sidebar-w); right: 0;
+      height: var(--topbar-h);
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      z-index: 999;
+      display: flex; align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      transition: background .3s, border-color .3s;
+    }
+    .topbar-toggle {
+      border: none; background: none;
+      color: var(--text-soft); font-size: 20px;
+      cursor: pointer; padding: 4px;
+      border-radius: 8px;
+      transition: var(--transition);
+      display: none;
+    }
+    .topbar-toggle:hover { color: var(--red-core); background: var(--red-xlight); }
+    .topbar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--text-dark); flex: 1;
+    }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+    .topbar-btn {
+      border: none; background: none;
+      color: var(--text-soft); font-size: 18px;
+      cursor: pointer; padding: 6px 8px;
+      border-radius: 8px;
+      transition: var(--transition);
+      position: relative;
+    }
+    .topbar-btn:hover { color: var(--red-core); background: var(--red-xlight); }
+    .admin-badge {
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 12px 5px 5px;
+      background: var(--red-xlight);
+      border-radius: 20px; cursor: pointer;
+    }
+    .admin-avatar {
+      width: 30px; height: 30px;
+      background: linear-gradient(135deg, var(--red-core), var(--red-deep));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 13px; font-weight: 700;
+    }
+    .admin-name { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+
+    /*ADMIN DROPDOWN POPUP*/
+    .admin-badge { position: relative; }
+    .admin-dropdown {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      min-width: 180px;
+      z-index: 10000;
+      overflow: hidden;
+      display: none;
+      animation: dropFadeIn .2s ease;
+    }
+    .admin-dropdown.show { display: block; }
+    @keyframes dropFadeIn {
+      from { opacity:0; transform: translateY(-6px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    .admin-dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .admin-dropdown-header strong { color: var(--text-dark); display: block; }
+    .admin-dropdown-header span { color: var(--text-soft); font-size: 12px; }
+    .admin-dropdown-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px;
+      font-size: 13.5px; color: var(--text-dark);
+      cursor: pointer; transition: var(--transition);
+      border: none; background: none; width: 100%; text-align: left;
+    }
+    .admin-dropdown-item:hover { background: var(--red-xlight); color: var(--red-core); }
+    .admin-dropdown-item.logout { color: var(--red-core); }
+    .admin-dropdown-item i { font-size: 15px; width: 18px; }
+
+
+      /*
+        MAIN CONTENT*/
+
+      #main-content{
+        margin-left:var(--sidebar-w);
+        margin-top:var(--topbar-h);
+
+        padding:28px;
+
+        min-height:100vh;
+      }#main-content{
+        margin-left:var(--sidebar-w);
+        margin-top:var(--topbar-h);
+
+        min-height:calc(100vh - var(--topbar-h));
+
+        padding:28px;
+
+        transition:margin-left .3s;
+      }
+
+      .page-section{
+        display:none;
+
+        animation:fadeIn .3s ease;
+      }
+
+      .page-section.active{
+        display:block;
+      }
+
+      @keyframes fadeIn{
+        from{
+          opacity:0;
+          transform:translateY(8px);
+        }
+
+        to{
+          opacity:1;
+          transform:translateY(0);
+        }
+      }
+
+      /*
+        SECTION HEADER*/
+
+      .section-header{
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+
+          margin-bottom:28px;
+      }
+
+      .section-title{
+          font-size:34px;
+          font-weight:700;
+          color:var(--text-dark);
+      }
+
+      .section-title span{
+          color:var(--red-core);
+      }
+
+      .section-subtitle{
+          margin-top:6px;
+          color:var(--text-soft);
+          font-size:14px;
+      }
+
+      /*
+        FORM CARD*/
+
+      .form-card{
+          background:var(--white);
+
+          border-radius:var(--radius-lg);
+
+          border:1px solid var(--border);
+
+          box-shadow:var(--shadow-sm);
+
+          padding:28px;
+      }
+
+      /*
+        FORM*/
+
+      .form-label-custom{
+          font-size:13px;
+          font-weight:700;
+          color:var(--text-mid);
+
+          margin-bottom:8px;
+
+          display:block;
+      }
+
+      .form-control-custom,
+      .form-select-custom{
+          width:100%;
+
+          border:1.5px solid var(--border);
+
+          background:#fff;
+
+          border-radius:12px;
+
+          padding:13px 16px;
+
+          font-size:14px;
+
+          transition:var(--transition);
+      }
+
+      .form-control-custom:focus,
+      .form-select-custom:focus{
+          outline:none;
+
+          border-color:var(--red-core);
+
+          box-shadow:0 0 0 4px rgba(192,57,43,.12);
+      }
+
+      /*
+        BUTTON*/
+
+      .btn-red{
+          border:none;
+
+          background:linear-gradient(
+              135deg,
+              var(--red-core),
+              var(--red-deep)
+          );
+
+          color:#fff;
+
+          padding:14px 22px;
+
+          border-radius:14px;
+
+          font-size:14px;
+          font-weight:700;
+
+          transition:var(--transition);
+
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          gap:10px;
+      }
+
+      .btn-red:hover{
+          transform:translateY(-2px);
+
+          box-shadow:0 10px 24px rgba(192,57,43,.28);
+      }
+
+      /*
+        STOCK INFO CARD*/
+
+      .stock-info-card{
+          height:100%;
+
+          background:
+          linear-gradient(
+              135deg,
+              var(--red-deep),
+              #4A0A0A
+          );
+
+          color:#fff;
+
+          border-radius:var(--radius-lg);
+
+          padding:28px;
+
+          position:relative;
+
+          overflow:hidden;
+      }
+
+      .stock-info-card::before{
+          content:'☕';
+
+          position:absolute;
+
+          right:-10px;
+          bottom:-20px;
+
+          font-size:150px;
+
+          opacity:.05;
+      }
+
+      .stock-info-card h5{
+          font-size:18px;
+          margin-bottom:22px;
+      }
+
+      .stock-info-item{
+          margin-bottom:18px;
+      }
+
+      .stock-info-item .label{
+          font-size:13px;
+          opacity:.7;
+          margin-bottom:4px;
+      }
+
+      .stock-info-item .value{
+          font-size:28px;
+          font-weight:700;
+      }
+
+      .stock-info-item .unit{
+          font-size:13px;
+          opacity:.75;
+      }
+
+      /*
+        INFO PANEL*/
+
+      #stockInfoContent{
+          position:relative;
+          z-index:2;
+      }
+
+      /*
+        INPUT GROUP CUSTOM*/
+
+      textarea.form-control-custom{
+          resize:none;
+      }
+
+      /* =========================
+   TOAST NOTIFICATION
+========================= */
+
+#toastContainer{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:99999;
+
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.toast-box{
+  min-width:280px;
+
+  padding:14px 18px;
+
+  border-radius:14px;
+
+  color:#fff;
+
+  font-size:14px;
+  font-weight:600;
+
+  box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+  animation:slideToast .3s ease;
+}
+
+.toast-success{
+  background:linear-gradient(135deg,#198754,#146c43);
+}
+
+.toast-error{
+  background:linear-gradient(135deg,#dc3545,#b02a37);
+}
+
+.toast-warning{
+  background:linear-gradient(135deg,#fd7e14,#d9480f);
+}
+
+@keyframes slideToast{
+
+  from{
+    opacity:0;
+    transform:translateX(40px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateX(0);
+  }
+
+}
+
+    .topbar-toggle{
+  position:relative;
+  z-index:3000;
+}
+
+/* RESPONSIVE MOBILE */
+
+@media (max-width:991px){
+
+  #sidebar{
+    transform:translateX(-100%);
+    width:260px;
+    z-index:2000;
+  }
+
+  #sidebar.open{
+    transform:translateX(0);
+  }
+
+  #topbar{
+    left:0;
+  }
+
+  #main-content{
+    margin-left:0;
+    padding:20px;
+  }
+
+  .topbar-toggle{
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .sidebar-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    z-index:1500;
+  }
+
+  .sidebar-overlay.show{
+    display:block;
+  }
+
+}
+      
+
+    </style>
+
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside id="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="brand-icon">☕</div>
+      <h6>
+        TE.CO Stock<br>
+        Inventory System
+      </h6>
+    </div>
+    <nav class="sidebar-nav">
+
+      <!--Dashboard-->
+      <div class="nav-item-custom">
+        <a href="index.html"
+            class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-grid-1x2"></i>
+          <span>Dashboard</span>
+        </a>
+      </div>
+
+      <!--Data Bahan-->
+      <div class="nav-item-custom">
+        <a href="databahan.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-box-seam"></i>
+          <span>Data Bahan</span>
+        </a>
+      </div>
+
+      <!--Pemakaian Bahan-->
+      <div class="nav-item-custom">
+        <a href="pemakaian.html"
+          class="nav-link-custom active d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-clipboard-check"></i>
+          <span>Pemakaian Bahan</span>
+        </a>
+      </div>
+
+      <!--Riwayat Pemakaian-->
+      <div class="nav-item-custom">
+        <a href="riwayat.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-clock-history"></i>
+          <span>Riwayat Pemakaian</span>
+        </a>
+      </div>
+
+      <!--Laporan-->
+      <div class="nav-item-custom">
+        <a href="laporan.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-file-earmark-bar-graph"></i>
+          <span>Laporan</span>
+        </a>
+      </div>
+
+      <!--Prediksi-->
+      <div class="nav-item-custom">
+        <a href="prediksi.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-graph-up-arrow"></i>
+          <span>Prediksi Pemakaian</span>
+        </a>
+      </div>
+
+      <!--About-->
+      <div class="nav-item-custom">
+        <a href="about.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-info-circle"></i>
+          <span>About</span>
+        </a>
+      </div>
+
+    </nav>
+      <div class="sidebar-footer">
+        <button class="dark-toggle" id="darkToggle">
+          <i class="bi bi-moon-stars-fill" id="darkIcon"></i>
+          <span id="darkLabel">Dark Mode</span>
+        </button>
+      </div>
+
+  </aside>
+
+  <!--TOPBAR-->
+  <header id="topbar">
+  <button class="topbar-toggle" id="sidebarToggle">
+    <i class="bi bi-list"></i>
+  </button>
+  <div class="topbar-title">Coffee Stock Inventory System</div>
+  <div class="topbar-actions">
+    <div class="admin-badge" id="adminBadgeWrapper">
+      <div class="admin-avatar">A</div>
+      <span class="admin-name">Admin</span>
+      <i class="bi bi-chevron-down" style="font-size:10px; color:var(--text-soft);"></i>
+      <div class="admin-dropdown" id="adminDropdown">
+        <div class="admin-dropdown-header">
+          <strong>Admin</strong>
+          <span>admin te.co</span>
+        </div>
+        <button class="admin-dropdown-item logout" id="btnLogout">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main id="main-content">
+      <section class="page-section active">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Pemakaian <span>Bahan</span></div>
+          <div style="font-size:13px; color:var(--text-soft);">Catat penggunaan bahan baku</div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-7">
+          <div class="form-card">
+            <h5><i class="bi bi-clipboard-plus me-2" style="color:var(--red-core);"></i>Form Pemakaian</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-custom">Nama Bahan</label>
+                <select class="form-select-custom" id="pemakaianBahan">
+                  <option value="">-- Pilih Bahan --</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Satuan</label>
+                <select class="form-select-custom" id="pemakaianSatuan">
+                  <option value="">-- Pilih Satuan --</option>
+                  <option>Kg</option>
+                  <option>Liter</option>
+                  <option>Gram</option>
+                  <option>ml</option>
+                  <option>Pcs</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Jumlah Pemakaian</label>
+                <input type="number" class="form-control-custom" id="pemakaianJumlah" placeholder="Masukkan jumlah" min="0" step="0.1">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Tanggal Keluar</label>
+                <input type="date" class="form-control-custom" id="pemakaianTanggal">
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Keterangan (opsional)</label>
+                <textarea class="form-control-custom" id="pemakaianKeterangan" rows="2" placeholder="Misal: Untuk produksi latte pagi..."></textarea>
+              </div>
+              <div class="col-12">
+                <button class="btn-red w-100" id="btnSimpanPemakaian">
+                  <i class="bi bi-check-lg"></i> Simpan Pemakaian
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="stock-info-card" id="stockInfoPanel">
+            <h5>Stok Saat Ini</h5>
+            <div id="stockInfoContent">
+              <div style="opacity:.5; font-size:13px;">Pilih bahan untuk melihat info stok</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="toastContainer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+
+/*
+   LOCAL STORAGE*/
+
+let dataBahan = [];
+let dataRiwayat = [];
+let nextRiwayatId = 1;
+
+function loadData() {
+
+  const bahan = localStorage.getItem('csis_dataBahan');
+  const riwayat = localStorage.getItem('csis_dataRiwayat');
+
+  if (bahan) {
+    dataBahan = JSON.parse(bahan);
+  }
+
+  if (riwayat) {
+    dataRiwayat = JSON.parse(riwayat);
+  }
+
+  nextRiwayatId =
+    parseInt(localStorage.getItem('csis_nextRiwayatId')) || 1;
+}
+
+function saveData() {
+
+  localStorage.setItem(
+    'csis_dataBahan',
+    JSON.stringify(dataBahan)
+  );
+
+  localStorage.setItem(
+    'csis_dataRiwayat',
+    JSON.stringify(dataRiwayat)
+  );
+
+  localStorage.setItem(
+    'csis_nextRiwayatId',
+    nextRiwayatId
+  );
+}
+
+
+/*
+   UTILITY*/
+
+function todayStr() {
+
+  return new Date()
+    .toISOString()
+    .split('T')[0];
+}
+
+function formatDate(d) {
+
+  if (!d) return '-';
+
+  const parts = d.split('-');
+
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+function getBadgeKondisi(kondisi) {
+
+  if (kondisi === 'Fresh') {
+
+    return `
+      <span style="
+        background:#198754;
+        padding:4px 10px;
+        border-radius:20px;
+        font-size:12px;
+      ">
+        Fresh
+      </span>
+    `;
+  }
+
+  if (kondisi === 'Lama') {
+
+    return `
+      <span style="
+        background:#fd7e14;
+        padding:4px 10px;
+        border-radius:20px;
+        font-size:12px;
+      ">
+        Lama
+      </span>
+    `;
+  }
+
+  return `
+    <span style="
+      background:#dc3545;
+      padding:4px 10px;
+      border-radius:20px;
+      font-size:12px;
+    ">
+      Kritis
+    </span>
+  `;
+}
+
+
+/*
+   REFRESH KONDISI*/
+
+function refreshKondisi(b) {
+
+  const today = new Date();
+
+  today.setHours(0,0,0,0);
+
+  if (b.stok === 0) {
+
+    b.kondisi = 'Kritis';
+    return;
+  }
+
+  if (b.stok <= 2) {
+
+    b.kondisi = 'Lama';
+    return;
+  }
+
+  if (b.tglExpired) {
+
+    const exp = new Date(b.tglExpired);
+
+    exp.setHours(0,0,0,0);
+
+    const diffDays =
+      Math.floor((exp - today) / 86400000);
+
+    if (diffDays < 0) {
+
+      b.kondisi = 'Kritis';
+      return;
+    }
+
+    if (diffDays <= 7) {
+
+      b.kondisi = 'Kritis';
+      return;
+    }
+
+    if (diffDays <= 30) {
+
+      b.kondisi = 'Lama';
+      return;
+    }
+  }
+
+  b.kondisi = 'Fresh';
+}
+
+
+/*
+   INIT PEMAKAIAN*/
+
+function initPemakaian() {
+
+  $('#pemakaianTanggal').val(todayStr());
+
+  const select = $('#pemakaianBahan');
+
+  select.empty();
+
+  select.append(`
+    <option value="">
+      -- Pilih Bahan --
+    </option>
+  `);
+
+  dataBahan.forEach(b => {
+
+    select.append(`
+      <option value="${b.id}">
+        ${b.nama}
+      </option>
+    `);
+
+  });
+}
+
+
+/*
+   PILIH BAHAN*/
+
+$('#pemakaianBahan').on('change', function () {
+
+
+  const id = parseInt($(this).val());
+
+  const bahan =
+    dataBahan.find(b => b.id === id);
+
+
+  if (!bahan) {
+
+    $('#stockInfoContent').html(`
+      <div style="opacity:.5;font-size:13px;">
+        Pilih bahan untuk melihat info stok
+      </div>
+    `);
+
+    $('#pemakaianSatuan').val('');
+
+    return;
+  }
+
+  $('#pemakaianSatuan').val(bahan.satuan);
+
+  $('#stockInfoContent').html(`
+
+    <div class="stock-info-item">
+      <div class="label">Nama Bahan</div>
+      <div class="value" style="font-size:18px;">
+        ${bahan.nama}
+      </div>
+    </div>
+
+    <div class="stock-info-item">
+      <div class="label">Stok Tersedia</div>
+      <div class="value">
+        ${bahan.stok}
+        <span class="unit">${bahan.satuan}</span>
+      </div>
+    </div>
+
+    <div class="stock-info-item">
+      <div class="label">Kondisi</div>
+      <div>
+        ${getBadgeKondisi(bahan.kondisi)}
+      </div>
+    </div>
+
+    <div class="stock-info-item">
+      <div class="label">Kategori</div>
+      <div style="opacity:.8;">
+        ${bahan.kategori}
+      </div>
+    </div>
+
+    <div class="stock-info-item">
+      <div class="label">Expired</div>
+      <div style="opacity:.8;">
+        ${formatDate(bahan.tglExpired)}
+      </div>
+    </div>
+
+  `);
+
+});
+
+/* =========================
+   TOAST FUNCTION
+========================= */
+
+function showToast(message, type = 'success') {
+
+  const toast = $(`
+    <div class="toast-box toast-${type}">
+      ${message}
+    </div>
+  `);
+
+  $('#toastContainer').append(toast);
+
+  setTimeout(() => {
+
+    toast.fadeOut(300, function () {
+      $(this).remove();
+    });
+
+  }, 3000);
+
+}
+
+/*
+   SIMPAN PEMAKAIAN*/
+
+$('#btnSimpanPemakaian').on('click', function () {
+
+  const bahanId =
+    parseInt($('#pemakaianBahan').val());
+
+  const jumlah =
+    parseFloat($('#pemakaianJumlah').val());
+
+  const satuan =
+    $('#pemakaianSatuan').val();
+
+  const tanggal =
+    $('#pemakaianTanggal').val();
+
+  const keterangan =
+    $('#pemakaianKeterangan').val();
+
+  if (
+    !bahanId ||
+    isNaN(jumlah) ||
+    jumlah <= 0 ||
+    !tanggal
+  ) {
+
+    showToast('Lengkapi data pemakaian!', 'error');
+
+    return;
+  }
+
+  const bahan =
+    dataBahan.find(b => b.id === bahanId);
+
+  if (jumlah > bahan.stok) {
+
+    showToast('Stok tidak cukup!', 'error');
+
+    return;
+  }
+
+  bahan.stok =
+    parseFloat((bahan.stok - jumlah).toFixed(2));
+
+  refreshKondisi(bahan);
+
+  dataRiwayat.unshift({
+
+    id: nextRiwayatId++,
+
+    bahan: bahan.nama,
+
+    jumlah: jumlah,
+
+    satuan: satuan,
+
+    tanggal: tanggal,
+
+    keterangan: keterangan || '-'
+  });
+
+  saveData();
+
+  showToast('Pemakaian berhasil disimpan!', 'success');
+
+  $('#pemakaianJumlah').val('');
+
+  $('#pemakaianKeterangan').val('');
+
+  $('#pemakaianBahan')
+    .val('')
+    .trigger('change');
+
+});
+
+
+/*
+   DARK MODE*/
+
+$('#darkToggle').on('click', function () {
+
+  const isDark =
+    $('html').attr('data-theme') === 'dark';
+
+  $('html').attr(
+    'data-theme',
+    isDark ? 'light' : 'dark'
+  );
+
+  $('#darkIcon').attr(
+    'class',
+    isDark
+      ? 'bi bi-moon-stars-fill'
+      : 'bi bi-sun-fill'
+  );
+
+  $('#darkLabel').text(
+    isDark
+      ? 'Dark Mode'
+      : 'Light Mode'
+  );
+
+  localStorage.setItem(
+    'csis_theme',
+    isDark ? 'light' : 'dark'
+  );
+});
+
+/*
+   SIDEBAR MOBILE
+*/
+
+$('#sidebarToggle').on('click', function (e) {
+
+  e.stopPropagation();
+
+  $('#sidebar').toggleClass('open');
+  $('#sidebarOverlay').toggleClass('show');
+
+});
+
+/*
+   TUTUP SIDEBAR SAAT KLIK OVERLAY
+*/
+
+$('#sidebarOverlay').on('click', function () {
+
+  $('#sidebar').removeClass('open');
+  $('#sidebarOverlay').removeClass('show');
+
+});
+
+/*
+   TUTUP SIDEBAR SAAT PILIH MENU
+*/
+
+$('.nav-link-custom').on('click', function () {
+
+  if ($(window).width() <= 991) {
+
+    $('#sidebar').removeClass('open');
+    $('#sidebarOverlay').removeClass('show');
+
+  }
+
+});
+
+
+/*
+   ADMIN DROPDOWN*/
+
+$('#adminBadgeWrapper').on('click', function(e) {
+
+  e.stopPropagation();
+
+  $('#adminDropdown').toggleClass('show');
+
+});
+
+$(document).on('click', function() {
+
+  $('#adminDropdown').removeClass('show');
+
+});
+
+
+/*
+   LOGOUT*/
+
+$('#btnLogout').on('click', function() {
+
+  localStorage.removeItem('csis_loggedIn');
+
+  window.location.href = 'login.html';
+
+});
+
+
+/*
+   INIT*/
+
+$(document).ready(function () {
+
+  loadData();
+
+  initPemakaian();
+
+  const savedTheme =
+    localStorage.getItem('csis_theme') || 'light';
+
+  $('html').attr('data-theme', savedTheme);
+
+  if (savedTheme === 'dark') {
+
+    $('#darkIcon')
+      .attr('class', 'bi bi-sun-fill');
+
+    $('#darkLabel')
+      .text('Light Mode');
+  }
+
+});
+
+</script>
+</body>
+</html>

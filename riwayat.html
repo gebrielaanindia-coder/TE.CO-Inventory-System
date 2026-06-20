@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Bahan</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+
+    <style>
+        /*
+        ROOT VARIABLES*/
+        :root{
+          --red-deep:#8B0000;
+          --red-core:#C0392B;
+          --red-vivid:#E74C3C;
+          --red-light:#FADBD8;
+          --red-xlight:#FEF5F4;
+
+          --gold:#D4A843;
+          --gold-light:#F9EFD7;
+
+          --cream:#FDF6EE;
+          --white:#FFFFFF;
+
+          --text-dark:#1A0A0A;
+          --text-mid:#4A2020;
+          --text-soft:#8B5E5E;
+
+          --border:#EDD8D4;
+
+          --shadow-sm:0 2px 8px rgba(139,0,0,.08);
+          --shadow-md:0 6px 24px rgba(139,0,0,.12);
+
+          --sidebar-w:240px;
+          --topbar-h:62px;
+
+          --radius:12px;
+          --radius-lg:18px;
+
+          --transition:all .25s ease;
+        }
+
+        /*
+          DARK MODE*/
+        [data-theme="dark"]{
+          --cream:#1C0D0D;
+          --white:#2A1111;
+
+          --text-dark:#F5E8E8;
+          --text-mid:#D4A4A4;
+          --text-soft:#A07070;
+
+          --border:#3D1A1A;
+
+          --red-xlight:#2A1010;
+          --gold-light:#2A1F0A;
+
+          --shadow-sm:0 2px 8px rgba(0,0,0,.3);
+          --shadow-md:0 6px 24px rgba(0,0,0,.4);
+        }
+
+        /*
+          BASE*/
+        *,
+        *::before,
+        *::after{
+          box-sizing:border-box;
+        }
+
+        body{
+          margin:0;
+          overflow-x:hidden;
+
+          font-family:'DM Sans',sans-serif;
+
+          background:var(--cream);
+          color:var(--text-dark);
+
+          transition:background .3s,color .3s;
+        }
+
+        h1,h2,h3,h4,h5,h6{
+          font-family:'Playfair Display',serif;
+        }
+
+        a{
+          text-decoration:none;
+        }
+
+        /*
+          SIDEBAR*/
+        #sidebar{
+          position:fixed;
+          top:0;
+          left:0;
+
+          width:var(--sidebar-w);
+          height:100vh;
+
+          background:linear-gradient(
+            175deg,
+            var(--red-deep) 0%,
+            #4A0A0A 100%
+          );
+
+          z-index:1000;
+
+          display:flex;
+          flex-direction:column;
+
+          overflow:hidden;
+
+          transition:transform .3s ease;
+        }
+
+        #sidebar::before{
+          content:'';
+
+          position:absolute;
+          inset:0;
+          pointer-events:none;
+        }
+
+        .sidebar-brand{
+          padding:22px 20px 16px;
+
+          border-bottom:1px solid rgba(255,255,255,.1);
+        }
+
+        .sidebar-brand .brand-icon{
+          width:38px;
+          height:38px;
+
+          display:inline-flex;
+          align-items:center;
+          justify-content:center;
+
+          margin-bottom:8px;
+
+          border-radius:10px;
+
+          background:var(--gold);
+
+          font-size:18px;
+          color:var(--red-deep);
+        }
+
+        .sidebar-brand h6{
+          margin:0;
+
+          line-height:1.3;
+
+          font-size:13px;
+          font-weight:700;
+
+          color:#fff;
+        }
+
+        .sidebar-brand small{
+          color:rgba(255,255,255,.5);
+          font-size:10px;
+        }
+
+        .sidebar-nav{
+          flex:1;
+
+          padding:12px 0;
+
+          overflow-y:auto;
+        }
+
+        .sidebar-nav::-webkit-scrollbar{
+          width:3px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb{
+          background:rgba(255,255,255,.2);
+          border-radius:2px;
+        }
+
+        .nav-item-custom{
+          padding:0 12px;
+          margin-bottom:2px;
+        }
+
+        .nav-link-custom{
+          width:100%;
+
+          display:flex;
+          align-items:center;
+          gap:10px;
+
+          padding:10px 14px;
+
+          border:none;
+          border-radius:10px;
+
+          background:none;
+
+          text-align:left;
+
+          cursor:pointer;
+
+          color:rgba(255,255,255,.65);
+
+          font-size:13.5px;
+          font-weight:500;
+
+          white-space:nowrap;
+
+          transition:var(--transition);
+        }
+
+        .nav-link-custom i{
+          width:20px;
+          flex-shrink:0;
+
+          font-size:16px;
+        }
+
+        .nav-link-custom:hover{
+          background:rgba(255,255,255,.08);
+          color:#fff;
+        }
+
+        .nav-link-custom.active{
+          background:linear-gradient(
+            135deg,
+            var(--red-vivid),
+            var(--gold)
+          );
+
+          color:#fff;
+
+          font-weight:600;
+
+          box-shadow:0 4px 14px rgba(231,76,60,.4);
+        }
+
+        .sidebar-footer{
+          padding:16px 12px;
+
+          border-top:1px solid rgba(255,255,255,.1);
+        }
+
+        .dark-toggle{
+          width:100%;
+
+          display:flex;
+          align-items:center;
+          gap:10px;
+
+          padding:10px 14px;
+
+          border:none;
+          border-radius:10px;
+
+          background:none;
+
+          cursor:pointer;
+
+          color:rgba(255,255,255,.65);
+
+          font-size:13.5px;
+          font-weight:500;
+
+          transition:var(--transition);
+        }
+
+        .dark-toggle:hover{
+          background:rgba(255,255,255,.08);
+          color:#fff;
+        }
+
+        .dark-toggle i{
+          width:20px;
+          font-size:16px;
+        }
+
+        /*TOPBAR*/
+      #topbar {
+      position: fixed; top: 0;
+      left: var(--sidebar-w); right: 0;
+      height: var(--topbar-h);
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      z-index: 999;
+      display: flex; align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      transition: background .3s, border-color .3s;
+    }
+    .topbar-toggle {
+      border: none; background: none;
+      color: var(--text-soft); font-size: 20px;
+      cursor: pointer; padding: 4px;
+      border-radius: 8px;
+      transition: var(--transition);
+      display: none;
+    }
+    .topbar-toggle:hover { color: var(--red-core); background: var(--red-xlight); }
+    .topbar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--text-dark); flex: 1;
+    }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+    .topbar-btn {
+      border: none; background: none;
+      color: var(--text-soft); font-size: 18px;
+      cursor: pointer; padding: 6px 8px;
+      border-radius: 8px;
+      transition: var(--transition);
+      position: relative;
+    }
+    .topbar-btn:hover { color: var(--red-core); background: var(--red-xlight); }
+    .admin-badge {
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 12px 5px 5px;
+      background: var(--red-xlight);
+      border-radius: 20px; cursor: pointer;
+    }
+    .admin-avatar {
+      width: 30px; height: 30px;
+      background: linear-gradient(135deg, var(--red-core), var(--red-deep));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 13px; font-weight: 700;
+    }
+    .admin-name { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+
+    /*ADMIN DROPDOWN POPUP*/
+    .admin-badge { position: relative; }
+    .admin-dropdown {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      min-width: 180px;
+      z-index: 10000;
+      overflow: hidden;
+      display: none;
+      animation: dropFadeIn .2s ease;
+    }
+    .admin-dropdown.show { display: block; }
+    @keyframes dropFadeIn {
+      from { opacity:0; transform: translateY(-6px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    .admin-dropdown-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .admin-dropdown-header strong { color: var(--text-dark); display: block; }
+    .admin-dropdown-header span { color: var(--text-soft); font-size: 12px; }
+    .admin-dropdown-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px;
+      font-size: 13.5px; color: var(--text-dark);
+      cursor: pointer; transition: var(--transition);
+      border: none; background: none; width: 100%; text-align: left;
+    }
+    .admin-dropdown-item:hover { background: var(--red-xlight); color: var(--red-core); }
+    .admin-dropdown-item.logout { color: var(--red-core); }
+    .admin-dropdown-item i { font-size: 15px; width: 18px; }
+
+
+        /*
+          MAIN CONTENT*/
+
+        #main-content{
+          margin-left:var(--sidebar-w);
+          margin-top:var(--topbar-h);
+
+          padding:28px;
+
+          min-height:100vh;
+        }#main-content{
+          margin-left:var(--sidebar-w);
+          margin-top:var(--topbar-h);
+
+          min-height:calc(100vh - var(--topbar-h));
+
+          padding:28px;
+
+          transition:margin-left .3s;
+        }
+
+        .page-section{
+          display:none;
+
+          animation:fadeIn .3s ease;
+        }
+
+        .page-section.active{
+          display:block;
+        }
+
+        @keyframes fadeIn{
+          from{
+            opacity:0;
+            transform:translateY(8px);
+          }
+
+          to{
+            opacity:1;
+            transform:translateY(0);
+          }
+        }
+
+        /*
+          SECTION HEADER*/
+
+        .section-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            margin-bottom:28px;
+        }
+
+        .section-title{
+            font-size:34px;
+            font-weight:700;
+            color:var(--text-dark);
+        }
+
+        .section-title span{
+            color:var(--red-core);
+        }
+
+        .section-subtitle{
+            margin-top:6px;
+            color:var(--text-soft);
+            font-size:14px;
+        }
+
+        /*
+          FORM CARD*/
+
+        .form-card{
+            background:var(--white);
+
+            border-radius:var(--radius-lg);
+
+            border:1px solid var(--border);
+
+            box-shadow:var(--shadow-sm);
+
+            padding:24px;
+        }
+
+        /*
+          SEARCH BOX*/
+
+        .search-box{
+            position:relative;
+        }
+
+        .search-box i{
+            position:absolute;
+
+            left:14px;
+            top:50%;
+
+            transform:translateY(-50%);
+
+            color:var(--text-soft);
+        }
+
+        .search-box input{
+            padding-left:42px;
+        }
+
+        /*
+          FORM*/
+
+        .form-label-custom{
+            display:block;
+
+            font-size:13px;
+            font-weight:700;
+
+            color:var(--text-mid);
+
+            margin-bottom:8px;
+        }
+
+        .form-control-custom,
+        .form-select-custom{
+            width:100%;
+
+            border:1.5px solid var(--border);
+
+            background:#fff;
+
+            border-radius:12px;
+
+            padding:13px 16px;
+
+            font-size:14px;
+
+            transition:var(--transition);
+        }
+
+        .form-control-custom:focus,
+        .form-select-custom:focus{
+            outline:none;
+
+            border-color:var(--red-core);
+
+            box-shadow:0 0 0 4px rgba(192,57,43,.12);
+        }
+
+        /*
+          BUTTON*/
+
+        .btn-red{
+            border:none;
+
+            background:linear-gradient(
+                135deg,
+                var(--red-core),
+                var(--red-deep)
+            );
+
+            color:#fff;
+
+            padding:13px 20px;
+
+            border-radius:12px;
+
+            font-size:14px;
+            font-weight:700;
+
+            transition:var(--transition);
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:10px;
+        }
+
+        .btn-red:hover{
+            transform:translateY(-2px);
+
+            box-shadow:0 10px 24px rgba(192,57,43,.25);
+        }
+
+        .btn-outline-red{
+            background:#fff;
+
+            border:1.5px solid var(--red-core);
+
+            color:var(--red-core);
+
+            padding:13px 20px;
+
+            border-radius:12px;
+
+            font-size:14px;
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:var(--transition);
+        }
+
+        .btn-outline-red:hover{
+            background:var(--red-core);
+            color:#fff;
+        }
+
+        /*
+          TABLE CARD*/
+
+        .table-card{
+            background:var(--white);
+
+            border-radius:var(--radius-lg);
+
+            border:1px solid var(--border);
+
+            box-shadow:var(--shadow-sm);
+
+            overflow:hidden;
+        }
+
+        .table-responsive{
+            overflow-x:auto;
+        }
+
+        /*
+          TABLE*/
+
+        .table{
+            width:100%;
+            border-collapse:collapse;
+            min-width:900px;
+        }
+
+        .table thead{
+            background:var(--red-xlight);
+        }
+
+        .table thead th{
+            padding:18px 16px;
+
+            font-size:13px;
+            font-weight:700;
+
+            color:var(--text-mid);
+
+            text-transform:uppercase;
+
+            letter-spacing:.5px;
+
+            border-bottom:1px solid var(--border);
+        }
+
+        .table tbody td{
+            padding:16px;
+
+            font-size:14px;
+
+            border-bottom:1px solid #f1e3df;
+
+            color:var(--text-dark);
+        }
+
+        .table tbody tr{
+            transition:var(--transition);
+        }
+
+        .table tbody tr:hover{
+            background:#fff7f5;
+        }
+
+        /*
+          BADGE*/
+
+        .badge-riwayat{
+            background:var(--red-light);
+
+            color:var(--red-deep);
+
+            padding:6px 12px;
+
+            border-radius:30px;
+
+            font-size:12px;
+            font-weight:700;
+        }
+
+        /*
+          PAGINATION*/
+
+        .pagination-custom{
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .page-btn{
+            width:38px;
+            height:38px;
+
+            border:none;
+
+            border-radius:10px;
+
+            background:#fff;
+
+            border:1px solid var(--border);
+
+            cursor:pointer;
+
+            transition:var(--transition);
+
+            font-weight:600;
+        }
+
+        .page-btn:hover{
+            border-color:var(--red-core);
+            color:var(--red-core);
+        }
+
+        .page-btn.active{
+            background:var(--red-core);
+            color:#fff;
+            border-color:var(--red-core);
+        }
+
+        /*
+          INFO TEXT*/
+
+        #infoRiwayatCount{
+            font-size:13px;
+            color:var(--text-soft);
+        }
+
+        /*
+          EMPTY STATE*/
+
+        .empty-state{
+            text-align:center;
+            padding:50px 20px;
+
+            color:var(--text-soft);
+        }
+
+        .empty-state i{
+            font-size:60px;
+            opacity:.3;
+
+            margin-bottom:16px;
+        }
+
+         .topbar-toggle{
+  position:relative;
+  z-index:3000;
+}
+/* RESPONSIVE MOBILE */
+
+@media (max-width:991px){
+
+  #sidebar{
+    transform:translateX(-100%);
+    width:260px;
+    z-index:2000;
+  }
+
+  #sidebar.open{
+    transform:translateX(0);
+  }
+
+  #topbar{
+    left:0;
+  }
+
+  #main-content{
+    margin-left:0;
+    padding:20px;
+  }
+
+  .topbar-toggle{
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .sidebar-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    z-index:1500;
+  }
+
+  .sidebar-overlay.show{
+    display:block;
+  }
+
+}
+    </style>
+
+</head>
+<body>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside id="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="brand-icon">☕</div>
+      <h6>
+        TE.CO Stock<br>
+        Inventory System
+      </h6>
+    </div>
+    <nav class="sidebar-nav">
+
+      <!--Dashboard-->
+      <div class="nav-item-custom">
+        <a href="index.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-grid-1x2"></i>
+          <span>Dashboard</span>
+        </a>
+      </div>
+
+      <!--Data Bahan-->
+      <div class="nav-item-custom">
+        <a href="databahan.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-box-seam"></i>
+          <span>Data Bahan</span>
+        </a>
+      </div>
+
+      <!--Pemakaian Bahan-->
+      <div class="nav-item-custom">
+        <a href="pemakaian.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-clipboard-check"></i>
+          <span>Pemakaian Bahan</span>
+        </a>
+      </div>
+
+      <!--Riwayat Pemakaian-->
+      <div class="nav-item-custom">
+        <a href="riwayat.html"
+          class="nav-link-custom active d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-clock-history"></i>
+          <span>Riwayat Pemakaian</span>
+        </a>
+      </div>
+
+      <!--Laporan-->
+      <div class="nav-item-custom">
+        <a href="laporan.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-file-earmark-bar-graph"></i>
+          <span>Laporan</span>
+        </a>
+      </div>
+
+      <!--Prediksi-->
+      <div class="nav-item-custom">
+        <a href="prediksi.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-graph-up-arrow"></i>
+          <span>Prediksi Pemakaian</span>
+        </a>
+      </div>
+
+      <!--About-->
+      <div class="nav-item-custom">
+        <a href="about.html"
+          class="nav-link-custom d-flex align-items-center gap-2 text-decoration-none">
+          <i class="bi bi-info-circle"></i>
+          <span>About</span>
+        </a>
+      </div>
+
+    </nav>
+      <div class="sidebar-footer">
+      <button class="dark-toggle" id="darkToggle">
+        <i class="bi bi-moon-stars-fill" id="darkIcon"></i>
+        <span id="darkLabel">Dark Mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!--TOPBAR-->
+ <header id="topbar">
+  <button class="topbar-toggle" id="sidebarToggle">
+    <i class="bi bi-list"></i>
+  </button>
+  <div class="topbar-title">Coffee Stock Inventory System</div>
+  <div class="topbar-actions">
+    <div class="admin-badge" id="adminBadgeWrapper">
+      <div class="admin-avatar">A</div>
+      <span class="admin-name">Admin</span>
+      <i class="bi bi-chevron-down" style="font-size:10px; color:var(--text-soft);"></i>
+      <div class="admin-dropdown" id="adminDropdown">
+        <div class="admin-dropdown-header">
+          <strong>Admin</strong>
+          <span>admin te.co</span>
+        </div>
+        <button class="admin-dropdown-item logout" id="btnLogout">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main id="main-content">
+      <section class="page-section active">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Riwayat <span>Pemakaian</span></div>
+          <div style="font-size:13px; color:var(--text-soft);">Histori penggunaan bahan baku</div>
+        </div>
+      </div>
+
+      <div class="form-card mb-3">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-4">
+            <div class="search-box">
+              <i class="bi bi-search"></i>
+              <input type="text" class="form-control-custom" id="searchRiwayat" placeholder="Cari nama bahan...">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label-custom">Dari Tanggal</label>
+            <input type="date" class="form-control-custom" id="riwayatDari">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label-custom">Sampai Tanggal</label>
+            <input type="date" class="form-control-custom" id="riwayatSampai">
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>No</th><th>Tanggal</th><th>Nama Bahan</th><th>Jumlah</th><th>Satuan</th><th>Keterangan</th><th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tableRiwayatBody"></tbody>
+          </table>
+        </div>
+        <div class="p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <span style="font-size:13px; color:var(--text-soft);" id="infoRiwayatCount"></span>
+          <div class="pagination-custom" id="paginasiRiwayat"></div>
+        </div>
+      </div>
+    </section>
+
+    <!--hapus-->
+
+    <div class="modal fade" id="modalHapus" tabindex="-1">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Konfirmasi Hapus</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <p style="font-size:14px;">Yakin ingin menghapus data ini?</p>
+            <input type="hidden" id="hapusId">
+            <input type="hidden" id="hapusType">
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn-outline-red" data-bs-dismiss="modal">Batal</button>
+            <button type="button" class="btn-red" id="btnKonfirmasiHapus">Hapus</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+/*
+   DATA & STORAGE*/
+
+let dataRiwayat = JSON.parse(localStorage.getItem('csis_dataRiwayat')) || [];
+
+const pagState = {
+    riwayat: 1,
+    perPage: 8
+};
+
+/*
+   FORMAT TANGGAL*/
+
+function formatDate(d) {
+    if (!d) return '-';
+
+    const parts = d.split('-');
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+/*
+   RENDER TABLE RIWAYAT*/
+
+function renderTableRiwayat(page) {
+
+    if (page) pagState.riwayat = page;
+
+    const search = $('#searchRiwayat').val().toLowerCase();
+    const dari = $('#riwayatDari').val();
+    const sampai = $('#riwayatSampai').val();
+
+    let filtered = dataRiwayat.filter(r => {
+
+        const matchSearch =
+            !search || r.bahan.toLowerCase().includes(search);
+
+        const matchDari =
+            !dari || r.tanggal >= dari;
+
+        const matchSampai =
+            !sampai || r.tanggal <= sampai;
+
+        return matchSearch && matchDari && matchSampai;
+    });
+
+    const total = filtered.length;
+
+    const pages = Math.max(
+        1,
+        Math.ceil(total / pagState.perPage)
+    );
+
+    if (pagState.riwayat > pages)
+        pagState.riwayat = pages;
+
+    const start =
+        (pagState.riwayat - 1) * pagState.perPage;
+
+    const slice =
+        filtered.slice(start, start + pagState.perPage);
+
+    const tbody = $('#tableRiwayatBody');
+
+    tbody.empty();
+
+    if (slice.length === 0) {
+
+        tbody.append(`
+        <tr>
+            <td colspan="7">
+                <div class="empty-state">
+                    <i class="bi bi-clock-history"></i>
+                    <p>Belum ada riwayat pemakaian</p>
+                </div>
+            </td>
+        </tr>
+        `);
+
+    } else {
+
+        slice.forEach((r, i) => {
+
+            tbody.append(`
+            <tr>
+                <td>${start + i + 1}</td>
+                <td>${formatDate(r.tanggal)}</td>
+                <td>${r.bahan}</td>
+                <td><strong>${r.jumlah}</strong></td>
+                <td>${r.satuan}</td>
+                <td>${r.keterangan}</td>
+
+                <td>
+                    <button
+                        class="btn-red"
+                        style="padding:6px 10px; font-size:12px;"
+                        onclick="hapusRiwayat(${r.id})"
+                    >
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            `);
+
+        });
+    }
+
+    $('#infoRiwayatCount').text(
+        `Menampilkan ${
+            total > 0 ? start + 1 : 0
+        }–${Math.min(start + pagState.perPage, total)} dari ${total} data`
+    );
+
+    renderPagination(
+        '#paginasiRiwayat',
+        pagState.riwayat,
+        pages
+    );
+}
+/*
+   PAGINATION*/
+
+function renderPagination(selector, current, total) {
+
+    const el = $(selector);
+
+    el.empty();
+
+    if (total <= 1) return;
+
+    el.append(`
+        <button
+            class="page-btn"
+            ${current === 1 ? 'disabled' : ''}
+            onclick="renderTableRiwayat(${current - 1})"
+        >
+            ‹
+        </button>
+    `);
+
+    for (let i = 1; i <= total; i++) {
+
+        el.append(`
+            <button
+                class="page-btn ${i === current ? 'active' : ''}"
+                onclick="renderTableRiwayat(${i})"
+            >
+                ${i}
+            </button>
+        `);
+    }
+
+    el.append(`
+        <button
+            class="page-btn"
+            ${current === total ? 'disabled' : ''}
+            onclick="renderTableRiwayat(${current + 1})"
+        >
+            ›
+        </button>
+    `);
+}
+
+/*
+   HAPUS DATA
+   */
+
+function hapusRiwayat(id){
+
+  $('#hapusId').val(id);
+
+  const modal = new bootstrap.Modal(
+    document.getElementById('modalHapus')
+  );
+
+  modal.show();
+}
+
+$('#btnKonfirmasiHapus').on('click', function(){
+
+  const id = parseInt($('#hapusId').val());
+
+  dataRiwayat = dataRiwayat.filter(
+    r => r.id !== id
+  );
+
+  localStorage.setItem(
+    'csis_dataRiwayat',
+    JSON.stringify(dataRiwayat)
+  );
+
+  renderTableRiwayat();
+
+  bootstrap.Modal.getInstance(
+    document.getElementById('modalHapus')
+  ).hide();
+
+});
+
+
+/*
+   DARK MODE*/
+
+$('#darkToggle').on('click', function () {
+
+    const isDark =
+        $('html').attr('data-theme') === 'dark';
+
+    $('html').attr(
+        'data-theme',
+        isDark ? 'light' : 'dark'
+    );
+
+    $('#darkIcon').attr(
+        'class',
+        isDark
+            ? 'bi bi-moon-stars-fill'
+            : 'bi bi-sun-fill'
+    );
+
+    $('#darkLabel').text(
+        isDark ? 'Dark Mode' : 'Light Mode'
+    );
+
+    localStorage.setItem(
+        'csis_theme',
+        isDark ? 'light' : 'dark'
+    );
+});
+
+/*
+   SIDEBAR MOBILE
+*/
+
+$('#sidebarToggle').on('click', function (e) {
+
+  e.stopPropagation();
+
+  $('#sidebar').toggleClass('open');
+  $('#sidebarOverlay').toggleClass('show');
+
+});
+
+/*
+   TUTUP SIDEBAR SAAT KLIK OVERLAY
+*/
+
+$('#sidebarOverlay').on('click', function () {
+
+  $('#sidebar').removeClass('open');
+  $('#sidebarOverlay').removeClass('show');
+
+});
+
+/*
+   TUTUP SIDEBAR SAAT PILIH MENU
+*/
+
+$('.nav-link-custom').on('click', function () {
+
+  if ($(window).width() <= 991) {
+
+    $('#sidebar').removeClass('open');
+    $('#sidebarOverlay').removeClass('show');
+
+  }
+
+});
+
+/*
+   ADMIN DROPDOWN*/
+
+$('#adminBadgeWrapper').on('click', function (e) {
+
+    e.stopPropagation();
+
+    $('#adminDropdown').toggleClass('show');
+
+});
+
+$(document).on('click', function () {
+
+    $('#adminDropdown').removeClass('show');
+
+});
+
+/*
+   LOGOUT*/
+
+$('#btnLogout').on('click', function () {
+
+    localStorage.removeItem('csis_loggedIn');
+
+    window.location.href = 'login.html';
+
+});
+
+/*
+   INIT*/
+
+$(function () {
+
+    const savedTheme =
+        localStorage.getItem('csis_theme') || 'light';
+
+    $('html').attr('data-theme', savedTheme);
+
+    if (savedTheme === 'dark') {
+
+        $('#darkIcon').attr(
+            'class',
+            'bi bi-sun-fill'
+        );
+
+        $('#darkLabel').text('Light Mode');
+    }
+
+    // Filter events
+    $('#searchRiwayat, #riwayatDari, #riwayatSampai')
+    .on('input change', function () {
+        renderTableRiwayat(1);
+    });
+
+    $('#resetRiwayat').on('click', function () {
+        $('#searchRiwayat').val('');
+        $('#riwayatDari').val('');
+        $('#riwayatSampai').val('');
+        renderTableRiwayat(1);
+    });
+
+    renderTableRiwayat();
+
+});
+</script>
+</body>
+</html>
